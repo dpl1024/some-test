@@ -62,6 +62,40 @@ cli
     },
     handler: (argv) => {
       console.log(argv);
+
+      console.log('start')
+
+      setTimeout(() => {
+        console.log('setTimeout1')
+      }, 0)
+
+      new Promise(() => {
+        let chain = Promise.resolve()
+        chain.then(() => console.log('chain1'))
+        chain.then(() => console.log('chain2'))
+        chain.then(() => console.log('chain3'))
+      })
+
+      let chain = Promise.resolve()
+      chain.then(() => console.log('chain4'))
+
+      setTimeout(() => {
+        console.log('setTimeout2')
+        let chain = Promise.resolve()
+        chain.then(() => console.log('chain5'))
+      }, 0)
+
+      console.log('end')
+
+      // start
+      // end
+      // chain1
+      // chain2
+      // chain3
+      // chain4
+      // setTimeout1
+      // setTimeout2
+      // chain5
     }
   })
   .parse(argv, context);
